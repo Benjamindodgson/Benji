@@ -1,0 +1,11 @@
+${PODS_ROOT}/Target Support Files/Pods-Benji/Pods-Benji-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework
+${BUILT_PRODUCTS_DIR}/GestureRecognizerClosures/GestureRecognizerClosures.framework
+${BUILT_PRODUCTS_DIR}/Koloda/Koloda.framework
+${BUILT_PRODUCTS_DIR}/Parse/Parse.framework
+${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework
+${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework
+${PODS_ROOT}/TwilioAccessManager/TwilioAccessManager.framework
+${PODS_ROOT}/TwilioChatClient/TwilioChatClient.framework
+${PODS_ROOT}/TwilioChatClient/TwilioChatClient.framework.dSYM
+${BUILT_PRODUCTS_DIR}/pop/pop.framework

@@ -11,7 +11,7 @@ PODS:
   - PureLayout (3.1.4)
   - ReactiveSwift (6.0.0)
   - TwilioAccessManager (1.1.2)
-  - TwilioChatClient (2.4.6)
+  - TwilioChatClient (2.6.0)
 
 DEPENDENCIES:
   - GestureRecognizerClosures
@@ -43,8 +43,8 @@ SPEC CHECKSUMS:
   PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
   ReactiveSwift: 24b7ed245617bbfd30ee0c87779b6c64ac1b4518
   TwilioAccessManager: f3b0d9edd2eb5a044e50ff78057ab13611a0baa1
-  TwilioChatClient: a942ada72abaaac1e25cec16826771441e1afb75
+  TwilioChatClient: ce41a128970a747bc82b2546ad5449276eff3b67
 
 PODFILE CHECKSUM: 335146fde654fc706af57311ef63f43d2cfaa3bf
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.5
