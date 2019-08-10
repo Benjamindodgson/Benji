@@ -134,11 +134,11 @@ class ChannelManager: NSObject {
         })
     }
 
-    func sendInvite(channel: TCHChannel, identity: String) {
+    func sendInvite(channel: TCHChannel, identity: String, completion: ((TCHResult) -> Void)?) {
         guard let members = channel.members else { return }
 
         members.invite(byIdentity: identity) { result in
-            print(result)
+            completion?(result)
         }
     }
 
