@@ -8,6 +8,7 @@
 
 import Foundation
 import Contacts
+import Parse
 
 enum HomeContentType: Int {
     case feed
@@ -54,25 +55,6 @@ class HomeViewController: FullScreenViewController {
 
         self.addButton.onTap { [unowned self] (tap) in
             self.presentContactPicker()
-//            ChannelManager.createChannel(channelName: "TEST CHANNEL", uniqueName: "TESTCHANNEL", type: .public)
-//                .withProgressBanner("Creating channel with TEST CHANNEL")
-//                .withErrorBanner()
-//                .ignoreUserInteractionEventsUntilDone()
-//                .observe { (result) in
-//                    switch result {
-//                    case .success(let channel):
-//                        let channelVC = ChannelViewController()
-//                        self.present(channelVC, animated: true) {
-//                            channelVC.loadMessages(for: .channel(channel))
-//                        }
-//                    case .failure(let error):
-//                        if let tomorrowError = error as? ClientError {
-//                            print(tomorrowError.localizedDescription)
-//                        } else {
-//                            print(error.localizedDescription)
-//                        }
-//                    }
-//            }
         }
     }
 
@@ -152,9 +134,45 @@ class HomeViewController: FullScreenViewController {
 extension HomeViewController: ContactsViewControllerDelegate {
 
     func contactsViewController(_ controller: ContactsViewController, didSelect contact: CNContact) {
-        self.dismiss(animated: true)
+        self.dismiss(animated: true) {
+            guard let firstNumber = contact.phoneNumbers.first else { return }
+            let stringNumber = firstNumber.value.stringValue.filter("0123456789".contains)
 
-        guard let firstNumber = contact.phoneNumbers.first else { return }
-        print(firstNumber.value.stringValue.filter("0123456789".contains))
+            guard let query = PFUser.query() else { return }
+            query.whereKey("phoneNumber", equalTo: stringNumber)
+
+            query.findObjectsInBackground(block: { (objects, error) in
+                if let error = error {
+                    print(error)
+                }
+
+                guard let user = objects?.first, let identifier = user.objectId else { return }
+                self.createChannel(with: identifier)
+            })
+        }
+    }
+
+    func createChannel(with inviteePhoneNumber: String) {
+        ChannelManager.createChannel(channelName: "TEST CHANNEL", type: .private)
+            .joinIfNeeded()
+            .invite(personUserID: inviteePhoneNumber)
+            .withProgressBanner("Creating channel with TEST CHANNEL")
+            .withErrorBanner()
+            .ignoreUserInteractionEventsUntilDone()
+            .observe { (result) in
+                switch result {
+                case .success(let channel):
+                    let channelVC = ChannelViewController()
+                    self.present(channelVC, animated: true) {
+                        channelVC.loadMessages(for: .channel(channel))
+                    }
+                case .failure(let error):
+                    if let tomorrowError = error as? ClientError {
+                        print(tomorrowError.localizedDescription)
+                    } else {
+                        print(error.localizedDescription)
+                    }
+                }
+        }
     }
 }

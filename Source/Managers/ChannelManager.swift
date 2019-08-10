@@ -69,7 +69,6 @@ class ChannelManager: NSObject {
     }
 
     static func createChannel(channelName: String,
-                              uniqueName: String,
                               type: TCHChannelType,
                               attributes: NSMutableDictionary = [:]) -> Future<TCHChannel> {
 
@@ -139,7 +138,7 @@ class ChannelManager: NSObject {
         guard let members = channel.members else { return }
 
         members.invite(byIdentity: identity) { result in
-
+            print(result)
         }
     }
 

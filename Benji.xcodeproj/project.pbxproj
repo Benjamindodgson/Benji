@@ -856,12 +856,12 @@
 		D6D1500A21D5E79B00CD8CE4 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				D68483FA22CD050C00362AC3 /* TableViewManager.swift */,
-				D6D1500B21D5E7C200CD8CE4 /* CollectionViewManager.swift */,
-				D6AF02FC220153F5002D5C75 /* LaunchManager.swift */,
 				D6AF0300220154E3002D5C75 /* ChannelManager.swift */,
 				D63826D12274C8C0001D4B8B /* ChannelManager+Extensions.swift */,
+				D6D1500B21D5E7C200CD8CE4 /* CollectionViewManager.swift */,
 				D642737E22C9A7EC0088256B /* ContactsManager.swift */,
+				D6AF02FC220153F5002D5C75 /* LaunchManager.swift */,
+				D68483FA22CD050C00362AC3 /* TableViewManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";

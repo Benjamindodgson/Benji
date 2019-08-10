@@ -15,9 +15,6 @@ class CollectionViewManager<CellType: DisplayableCell & UICollectionViewCell>: N
     var collectionView: UICollectionView
 
     var items = MutableProperty<[CellType.ItemType]>([])
-    // A deep copied array representing the last state of the items.
-    // Used to animate changes to the collection view
-    private var previousItems: [CellType.ItemType]?
 
     var didSelect: (_ item: CellType.ItemType, _ indexPath: IndexPath) -> Void = { _, _ in }
     var didLongPress: (_ item: CellType.ItemType, _ indexPath: IndexPath) -> Void = { _, _ in }
@@ -35,7 +32,6 @@ class CollectionViewManager<CellType: DisplayableCell & UICollectionViewCell>: N
 
     func reset() {
         self.items.value = []
-        self.previousItems = nil
         self.collectionView.reloadData()
     }
 
@@ -128,11 +124,9 @@ class CollectionViewManager<CellType: DisplayableCell & UICollectionViewCell>: N
 
     private func updateCollectionView(items: [CellType.ItemType], modify: @escaping () -> Void) {
 
-        self.reloadCollectionView(previousItems: self.previousItems ?? [],
+        self.reloadCollectionView(previousItems: self.items.value,
                                   newItems: items,
                                   modify: modify)
-
-        self.previousItems = items
     }
 
     private func reloadCollectionView(previousItems: [CellType.ItemType],
