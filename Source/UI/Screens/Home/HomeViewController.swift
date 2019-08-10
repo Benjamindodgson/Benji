@@ -152,10 +152,10 @@ extension HomeViewController: ContactsViewControllerDelegate {
         }
     }
 
-    func createChannel(with inviteePhoneNumber: String) {
+    func createChannel(with inviteeIdentifier: String) {
         ChannelManager.createChannel(channelName: "TEST CHANNEL", type: .private)
             .joinIfNeeded()
-            .invite(personUserID: inviteePhoneNumber)
+            .invite(personUserID: inviteeIdentifier)
             .withProgressBanner("Creating channel with TEST CHANNEL")
             .withErrorBanner()
             .ignoreUserInteractionEventsUntilDone()
