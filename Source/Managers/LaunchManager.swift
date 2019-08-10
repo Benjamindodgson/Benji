@@ -32,7 +32,7 @@ class LaunchManager {
             configuration.applicationId = self.appID
         }))
 
-        if let identity = PFUser.current()?.objectId {
+        if let user = PFUser.current(), let identity = user.objectId {
             self.authenticateChatClient(with: identity)
         } else {
             self.createAnonymousUser()
