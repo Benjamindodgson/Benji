@@ -61,8 +61,7 @@ class ChannelManager: NSObject {
     //MARK: HELPERS
 
     func getChannels(completion: @escaping ChannelsCompletion) {
-        guard let client = self.client,
-            let channels = client.channelsList() else { return }
+        guard let client = self.client, let channels = client.channelsList() else { return }
 
         let subscribedChannels = channels.subscribedChannels()
         completion(subscribedChannels, nil)

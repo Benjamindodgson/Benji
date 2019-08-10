@@ -113,7 +113,7 @@ extension ChannelManager: TwilioChatClientDelegate {
 
     func chatClient(_ client: TwilioChatClient, channelAdded channel: TCHChannel) {
 
-        if channel.status == TCHChannelStatus.notParticipating {
+        if channel.status == TCHChannelStatus.invited {
             channel.join() { result in
                 if result.isSuccessful() {
                     self.channelsUpdate.value = ChannelUpdate(channel: channel, status: .added)
