@@ -8,7 +8,6 @@ PODS:
   - Parse/Core (1.17.2):
     - Bolts/Tasks (~> 1.9)
   - pop (1.0.12)
-  - PureLayout (3.1.4)
   - ReactiveSwift (6.0.0)
   - TwilioAccessManager (1.1.2)
   - TwilioChatClient (2.6.0)
@@ -17,7 +16,6 @@ DEPENDENCIES:
   - GestureRecognizerClosures
   - Koloda
   - Parse
-  - PureLayout
   - ReactiveSwift
   - TwilioAccessManager
   - TwilioChatClient
@@ -29,7 +27,6 @@ SPEC REPOS:
     - Koloda
     - Parse
     - pop
-    - PureLayout
     - ReactiveSwift
     - TwilioAccessManager
     - TwilioChatClient
@@ -40,11 +37,10 @@ SPEC CHECKSUMS:
   Koloda: 75302d21882cc3e274c1561b1155805ea5919dab
   Parse: 3b31a3dd1777b07ee7f0caee32fafbff544483a5
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
-  PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
   ReactiveSwift: 24b7ed245617bbfd30ee0c87779b6c64ac1b4518
   TwilioAccessManager: f3b0d9edd2eb5a044e50ff78057ab13611a0baa1
   TwilioChatClient: ce41a128970a747bc82b2546ad5449276eff3b67
 
-PODFILE CHECKSUM: 335146fde654fc706af57311ef63f43d2cfaa3bf
+PODFILE CHECKSUM: 2c9135a7ca1d2822e2934fbbba9e4e21e607b046
 
 COCOAPODS: 1.7.5

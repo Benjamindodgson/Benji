@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import PureLayout
 
 enum HomeContentType: Int {
     case feed

@@ -103,7 +103,6 @@ class ToastView: UIView {
         self.toast = toast
         self.title = toast.title
         self.buttonContainer.addSubview(toast.button)
-        toast.button.autoPinEdgesToSuperviewEdges()
 
         toast.button.onTap { (tap) in
             //Add any repsone to the button tap here
@@ -284,5 +283,7 @@ class ToastView: UIView {
         self.titleLabel.top = self.displayableImageView.top
         self.titleLabel.height = self.displayableImageView.height
         self.titleLabel.centerOnY()
+
+        self.toast?.button.frame = self.buttonContainer.bounds
     }
 }

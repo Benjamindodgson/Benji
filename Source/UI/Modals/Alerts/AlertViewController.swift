@@ -27,21 +27,23 @@ class AlertViewController: ViewController, PagingModalPresentable {
 
         //self.content.configure(withDisplayable: displayable, footerButtons: footerButtons)
         self.addChild(viewController: childViewController, toView: self.content.contentView)
-        self.childViewController.view.autoPinEdgesToSuperviewEdges()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.view.addSubview(self.content)
-        self.content.autoPinEdgesToSuperviewEdges()
+    override func loadView() {
+        self.view = self.content
     }
 
     func configure(buttons: [LoadingButton]) {
         self.content.configure(buttons: buttons)
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        self.childViewController.view.frame = self.content.contentView.bounds
     }
 }

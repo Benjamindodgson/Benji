@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -180,7 +180,6 @@
 		D6DADF702207DF60007D9EB1 /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DADF6F2207DF60007D9EB1 /* ChannelCell.swift */; };
 		D6DADF722207DF83007D9EB1 /* ChannelsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DADF712207DF83007D9EB1 /* ChannelsCollectionView.swift */; };
 		D6DADF742207E0E2007D9EB1 /* TCHChannel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DADF732207E0E2007D9EB1 /* TCHChannel+Extensions.swift */; };
-		D6DADF76220801CF007D9EB1 /* ChannelsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DADF75220801CF007D9EB1 /* ChannelsContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -381,7 +380,6 @@
 		D6DADF6F2207DF60007D9EB1 /* ChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
 		D6DADF712207DF83007D9EB1 /* ChannelsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsCollectionView.swift; sourceTree = "<group>"; };
 		D6DADF732207E0E2007D9EB1 /* TCHChannel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TCHChannel+Extensions.swift"; sourceTree = "<group>"; };
-		D6DADF75220801CF007D9EB1 /* ChannelsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -915,7 +913,6 @@
 				D66F102722C7D1D200BA277D /* ChannelCellContentView.swift */,
 				D6DADF712207DF83007D9EB1 /* ChannelsCollectionView.swift */,
 				D6D1504E21E304D800CD8CE4 /* BouncyCollectionViewLayout.swift */,
-				D6DADF75220801CF007D9EB1 /* ChannelsContentView.swift */,
 			);
 			path = Channels;
 			sourceTree = "<group>";
@@ -1088,7 +1085,6 @@
 				D6D145FF21D5510400CD8CE4 /* StringStyle.swift in Sources */,
 				D68483F922CC3DE400362AC3 /* ChannelCollectionViewController.swift in Sources */,
 				D691794222F6418700340AA3 /* Router.swift in Sources */,
-				D6DADF76220801CF007D9EB1 /* ChannelsContentView.swift in Sources */,
 				D6D1501821D5F40F00CD8CE4 /* UICollectionView+Extensions.swift in Sources */,
 				D642737822C99DB50088256B /* ContactsCollectionView.swift in Sources */,
 				D6815DBB22EE1F1400E71251 /* FeedCollectionViewManager.swift in Sources */,

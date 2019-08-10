@@ -8,7 +8,6 @@
 
 import Foundation
 import TwilioChatClient
-import PureLayout
 
 class MessageCell: UICollectionViewCell {
 

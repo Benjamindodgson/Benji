@@ -8,7 +8,6 @@ target 'Benji' do
   pod 'TwilioChatClient'
   pod 'TwilioAccessManager'
   pod 'GestureRecognizerClosures'
-  pod 'PureLayout'
   pod 'ReactiveSwift'
   pod 'Koloda'
 
