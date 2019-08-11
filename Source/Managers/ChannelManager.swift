@@ -160,34 +160,31 @@ class ChannelManager: NSObject {
     //MARK: MAPPING
 
     func getAllMessages(for channel: TCHChannel, completion: @escaping ([ChannelSectionType]) -> Void) {
+
         guard let allMessages = channel.messages else { return }
 
         allMessages.getLastWithCount(100) { (result, messages) in
             guard let strongMessages = messages else { return }
 
-            let messageTypes: [MessageType] = strongMessages.map({ (message) -> MessageType in
-                return .message(message)
-            })
-
             var sections: [ChannelSectionType] = []
-            let grouped = Dictionary(grouping: messageTypes) { (element) -> Date in
-                let components = Calendar.current.dateComponents([.day, .year, .month], from: element.createdAt)
-                let date = Calendar.current.date(from: components)
-                return date ?? element.createdAt
-            }
 
-            for key in grouped.keys {
-                if let value = grouped[key] {
-                    let section = ChannelSectionType.init(date: key, items: value)
+            strongMessages.forEach { (message) in
+
+                // Determine if the message is a part of the latest channel section
+                let messageCreatedAt = message.timestampAsDate ?? Date.distantPast
+
+                if let latestSection = sections.last, latestSection.date.isSameDay(as: messageCreatedAt) {
+                    // If the message fits into the latest section, then just append it
+                    latestSection.items.append(.message(message))
+                } else {
+                    // Otherwise, create a new section with the date of this message
+                    let section = ChannelSectionType(date: messageCreatedAt.beginningOfDay,
+                                                     items: [.message(message)])
                     sections.append(section)
                 }
             }
 
-            let sorted = sections.sorted { (lhs, rhs) -> Bool in
-                return rhs.date.compare(lhs.date) == .orderedDescending
-            }
-
-            completion(sorted)
+            completion(sections)
         }
     }
 

@@ -15,10 +15,15 @@ extension Date: Diffable {
     }
 }
 
-struct ChannelSectionType: Diffable {
+class ChannelSectionType: Diffable {
 
     var date: Date
     var items: [MessageType] = []
+
+    init(date: Date, items: [MessageType]) {
+        self.date = date
+        self.items = items
+    }
 
     func diffIdentifier() -> NSObjectProtocol {
         return self.date.diffIdentifier()

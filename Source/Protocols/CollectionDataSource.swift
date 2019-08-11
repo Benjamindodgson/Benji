@@ -66,7 +66,7 @@ extension ChannelDataSource {
         var itemCount: Int?
         
         for (index, type) in self.sections.value.enumerated() {
-            if type.date.sameDay(as: item.createdAt) {
+            if type.date.isSameDay(as: item.createdAt) {
                 sectionIndex = index
                 itemCount = type.items.count
             }
