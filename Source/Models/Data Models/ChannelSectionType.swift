@@ -15,7 +15,7 @@ extension Date: Diffable {
     }
 }
 
-class ChannelSectionType: Diffable {
+class ChannelSectionType {
 
     var date: Date
     var items: [MessageType] = []
