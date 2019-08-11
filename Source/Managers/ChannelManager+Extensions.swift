@@ -19,7 +19,6 @@ struct ChatClientUpdate {
     var status: Status
 
     enum Status {
-        case sync(TCHClientSynchronizationStatus)
         case connectionState(TCHClientConnectionState)
         case userUpdate(TCHUser, TCHUserUpdate)
         case toastSubscribed
@@ -86,7 +85,7 @@ extension ChannelManager: TwilioChatClientDelegate {
             break
         }
 
-        self.clientUpdate.value = ChatClientUpdate(client: client, status: .sync(status))
+        self.clientSyncUpdate.value = status
     }
 
     func chatClient(_ client: TwilioChatClient, connectionStateUpdated state: TCHClientConnectionState) {

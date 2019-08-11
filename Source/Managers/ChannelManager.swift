@@ -16,6 +16,7 @@ class ChannelManager: NSObject {
     static let shared = ChannelManager()
     var client: TwilioChatClient?
 
+    var clientSyncUpdate = MutableProperty<TCHClientSynchronizationStatus?>(nil)
     var clientUpdate = MutableProperty<ChatClientUpdate?>(nil)
     var channelsUpdate = MutableProperty<ChannelUpdate?>(nil)
     var messageUpdate = MutableProperty<MessageUpdate?>(nil)

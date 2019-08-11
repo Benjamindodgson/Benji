@@ -11,12 +11,12 @@ import Foundation
 extension FeedViewController {
 
     func subscribeToUpdates() {
-        ChannelManager.shared.clientUpdate.producer.on { [weak self] (update) in
-            guard let `self` = self,
-                let clientUpdate = update,
-                case .sync(let status) = clientUpdate.status else { return }
 
-            switch status {
+
+        ChannelManager.shared.clientSyncUpdate.producer.on { [weak self] (update) in
+            guard let `self` = self, let clientUpdate = update else { return }
+
+            switch clientUpdate {
             case .started, .channelsListCompleted:
                 break
             case .completed:

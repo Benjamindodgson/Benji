@@ -40,12 +40,10 @@ extension ChannelCollectionViewController {
     }
 
     func subscribeToClient() {
-        ChannelManager.shared.clientUpdate.producer.on { [weak self] (update) in
-            guard let `self` = self,
-                let clientUpdate = update,
-                case .sync(let status) = clientUpdate.status else { return }
+        ChannelManager.shared.clientSyncUpdate.producer.on { [weak self] (update) in
+            guard let `self` = self, let clientUpdate = update else { return }
 
-            switch status {
+            switch clientUpdate {
             case .started, .channelsListCompleted:
                 self.loadingView.startAnimating()
             case .completed:
