@@ -23,10 +23,7 @@ class ChannelsViewController: CollectionViewController<ChannelCell, ChannelsColl
     }
 
     override func didSelect(item: ChannelType, at indexPath: IndexPath) {
-        let channelVC = ChannelViewController()
-        self.present(channelVC, animated: true) {
-            channelVC.loadMessages(for: item)
-        }
+        self.present(ChannelViewController(channelType: item), animated: true)
     }
 
     func animateIn(completion: @escaping CompletionHandler) {

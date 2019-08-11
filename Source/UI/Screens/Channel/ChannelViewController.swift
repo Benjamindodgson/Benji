@@ -11,6 +11,8 @@ import ReactiveSwift
 
 class ChannelViewController: FullScreenViewController {
 
+    let channelType: ChannelType
+
     lazy var channelCollectionVC = ChannelCollectionViewController()
 
     lazy var inputTextView: InputTextView = {
@@ -32,6 +34,19 @@ class ChannelViewController: FullScreenViewController {
     let dismissAnimator = UIViewPropertyAnimator(duration: 0.1,
                                                  curve: .easeIn,
                                                  animations: nil)
+
+    init(channelType: ChannelType) {
+        self.channelType = channelType
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    required init?(withObject object: DeepLinkable) {
+        fatalError("init(withObject:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +86,8 @@ class ChannelViewController: FullScreenViewController {
                 self.inputTextView.resignFirstResponder()
             }
         }
+
+        self.loadMessages(for: self.channelType)
     }
     
     override func viewDidLayoutSubviews() {

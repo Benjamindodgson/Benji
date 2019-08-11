@@ -24,7 +24,6 @@ class ViewController: UIViewController, Dismissable {
 
     func initializeViews() {}
 
-
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 

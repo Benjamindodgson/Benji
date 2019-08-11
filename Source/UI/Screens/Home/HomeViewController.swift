@@ -162,10 +162,8 @@ extension HomeViewController: ContactsViewControllerDelegate {
             .observe { (result) in
                 switch result {
                 case .success(let channel):
-                    let channelVC = ChannelViewController()
-                    self.present(channelVC, animated: true) {
-                        channelVC.loadMessages(for: .channel(channel))
-                    }
+                    let channelVC = ChannelViewController(channelType: .channel(channel))
+                    self.present(channelVC, animated: true)
                 case .failure(let error):
                     if let tomorrowError = error as? ClientError {
                         print(tomorrowError.localizedDescription)
