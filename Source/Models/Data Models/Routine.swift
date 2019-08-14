@@ -7,15 +7,12 @@
 //
 
 import Foundation
-import Parse
 
-class Routine: PFObject {
+class Routine {
 
     var messageCheckTime: Date
 
     init(messageCheckTime: Date) {
         self.messageCheckTime = messageCheckTime
-
-        super.init(className: "Routine")
     }
 }

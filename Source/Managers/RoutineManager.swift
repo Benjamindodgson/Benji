@@ -42,10 +42,10 @@ class RoutineManager {
         content.sound = UNNotificationSound.default
         content.badge = 1
 
-        let timeComponent = Calendar.current.dateComponents([.hour, .minute],
+        let timeComponents = Calendar.current.dateComponents([.hour, .minute],
                                                             from: routine.messageCheckTime)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: timeComponent,
-                                                    repeats: false)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: timeComponents,
+                                                    repeats: true)
 
         let request = UNNotificationRequest(identifier: identifier,
                                             content: content,
