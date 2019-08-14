@@ -13,11 +13,10 @@ class RoutineInputContentView: View {
     let timePicker = UIDatePicker()
 
     override func initialize() {
-        self.set(backgroundColor: .white)
-
         self.addSubview(self.timePicker)
         self.timePicker.datePickerMode = UIDatePicker.Mode.time
         self.timePicker.minuteInterval = 30
+        self.timePicker.setValue(Color.white.color, forKey: "textColor")
     }
 
     override func layoutSubviews() {
