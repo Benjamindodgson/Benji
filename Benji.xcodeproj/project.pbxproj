@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80D4A21623039B22007CB5F1 /* RoutineInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D4A21523039B22007CB5F1 /* RoutineInputViewController.swift */; };
+		80D4A21823039B82007CB5F1 /* RoutineInputContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D4A21723039B82007CB5F1 /* RoutineInputContentView.swift */; };
 		D60C814222092D5300A127A3 /* PagingCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60C814122092D5300A127A3 /* PagingCollectionViewFlowLayout.swift */; };
 		D60C814422092E4700A127A3 /* PagingCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60C814322092E4700A127A3 /* PagingCollectionView.swift */; };
 		D60C814622092F6B00A127A3 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60C814522092F6B00A127A3 /* Button.swift */; };
@@ -191,6 +193,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		80D4A21523039B22007CB5F1 /* RoutineInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineInputViewController.swift; sourceTree = "<group>"; };
+		80D4A21723039B82007CB5F1 /* RoutineInputContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineInputContentView.swift; sourceTree = "<group>"; };
 		8D57EE102F30EFF6827543EB /* Pods-Benji.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Benji.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Benji/Pods-Benji.debug.xcconfig"; sourceTree = "<group>"; };
 		B0D58BAEEF651AA0027FE108 /* Pods_Benji.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Benji.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8144E2A6499F243C0C3F7C9 /* Pods-Benji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Benji.release.xcconfig"; path = "Pods/Target Support Files/Pods-Benji/Pods-Benji.release.xcconfig"; sourceTree = "<group>"; };
@@ -775,6 +779,8 @@
 			isa = PBXGroup;
 			children = (
 				D6B2603C22E6B8EA00143CF0 /* ProfileViewController.swift */,
+				80D4A21723039B82007CB5F1 /* RoutineInputContentView.swift */,
+				80D4A21523039B22007CB5F1 /* RoutineInputViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1076,6 +1082,7 @@
 				D62C635622BE9E5C00F4D097 /* CollectionViewController.swift in Sources */,
 				D67896AF22FF62630059BA75 /* PhoneKit.swift in Sources */,
 				D6B2601822E4208900143CF0 /* ChannelHeaderDateLabel.swift in Sources */,
+				80D4A21823039B82007CB5F1 /* RoutineInputContentView.swift in Sources */,
 				D642735122C857760088256B /* MessageContext.swift in Sources */,
 				D60C814422092E4700A127A3 /* PagingCollectionView.swift in Sources */,
 				D642737622C99D9F0088256B /* ContactsCollectionViewManager.swift in Sources */,
@@ -1159,6 +1166,7 @@
 				D6D1504021DAFB8300CD8CE4 /* UITextField+Extensions.swift in Sources */,
 				D60C814622092F6B00A127A3 /* Button.swift in Sources */,
 				D6D1503721D7E74500CD8CE4 /* UIViewController+Extensions.swift in Sources */,
+				80D4A21623039B22007CB5F1 /* RoutineInputViewController.swift in Sources */,
 				D6B2606822E80A7900143CF0 /* ToastQueue.swift in Sources */,
 				D66F0FEA22C0695E00BA277D /* CNContact+Extensions.swift in Sources */,
 				D6DADF6E2207DF33007D9EB1 /* ChannelsCollectionViewManager.swift in Sources */,
