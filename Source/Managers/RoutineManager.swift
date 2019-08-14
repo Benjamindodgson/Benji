@@ -34,13 +34,15 @@ class RoutineManager {
 
         let notificationCenter = UNUserNotificationCenter.current()
 
-        let identifier = "Local Notification"
+        // Cancel any previous routines we may have set
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: ["Message Reminder"])
+
+        let identifier = "Message Reminder"
 
         let content = UNMutableNotificationContent()
         content.title = "Test title"
         content.body = "Test body"
         content.sound = UNNotificationSound.default
-        content.badge = 1
 
         let timeComponents = Calendar.current.dateComponents([.hour, .minute],
                                                             from: routine.messageCheckTime)
@@ -54,6 +56,8 @@ class RoutineManager {
         notificationCenter.add(request) { (error) in
             if let error = error {
                 print("Error \(error.localizedDescription)")
+            } else {
+                print("Scheduled notification")
             }
         }
     }
