@@ -11,7 +11,7 @@ import Foundation
 class RoutineInputContentView: View {
 
     let timePicker = UIDatePicker()
-    let setRoutineButton = UIButton()
+    let setRoutineButton = Button()
 
     override func initialize() {
         self.addSubview(self.timePicker)
@@ -20,8 +20,10 @@ class RoutineInputContentView: View {
         self.timePicker.setValue(Color.white.color, forKey: "textColor")
 
         self.addSubview(self.setRoutineButton)
-        self.setRoutineButton.setTitle("Set Routine", for: .normal)
-        self.setRoutineButton.set(backgroundColor: Color.blue)
+        self.setRoutineButton.set(style: .rounded(color: Color.blue,
+                                                  text: "Set Routine"),
+                                  shouldRound: true,
+                                  casingType: StringCasing.uppercase)
     }
 
     override func layoutSubviews() {

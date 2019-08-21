@@ -7,8 +7,14 @@
 //
 
 import Foundation
+import UserNotifications
 
 extension AppDelegate {
+
+    func initializePermissions() {
+        let notificationCenter = UNUserNotificationCenter.current()
+        _ = notificationCenter.requestAuthorization()
+    }
 
     func initializeKeyWindow(with rootViewController: UIViewController) {
         self.window = UIWindow(frame: UIScreen.main.bounds)

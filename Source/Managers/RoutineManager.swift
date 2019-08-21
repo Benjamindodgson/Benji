@@ -15,22 +15,6 @@ class RoutineManager {
 
     static let shared = RoutineManager()
 
-//    var currentRoutine: Routine? {
-//        didSet {
-//            guard let routine = self.currentRoutine else { return }
-//
-//
-//            let options: UNAuthorizationOptions = [.alert, .sound, .badge]
-//            notificationCenter.requestAuthorization(options: options) { (granted, error) in
-//                if granted {
-//                    self.scheduleNotification(for: routine)
-//                } else {
-//                    print("User has declined notifications")
-//                }
-//            }
-//        }
-//    }
-
     func getRoutineNotifications() -> Future<[UNNotificationRequest]> {
         let requestsPromise = Promise<[UNNotificationRequest]>()
 
@@ -51,8 +35,8 @@ class RoutineManager {
 
         let notificationCenter = UNUserNotificationCenter.current()
 
-        // Replace any previous notifications that had the same ID
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+        // Replace any previous notifications
+        notificationCenter.removeAllPendingNotificationRequests()
 
         let content = UNMutableNotificationContent()
         content.title = "New Messages"
