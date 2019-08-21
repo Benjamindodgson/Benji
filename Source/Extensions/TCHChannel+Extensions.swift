@@ -28,6 +28,11 @@ extension TCHChannel: Diffable, DisplayableCellItem {
             return Promise<TCHChannel>(value: channel)
         })
     }
+
+    func getAuthorAsUser() -> Future<PFUser> {
+        let promise = Promise<TCHChannel>(value: self)
+        return promise.getAuthorAsUser()
+    }
 }
 
 extension Future where Value == TCHChannel {
@@ -66,6 +71,29 @@ extension Future where Value == TCHChannel {
                 } else {
                     promise.resolve(with: channel)
                 }
+            }
+
+            return promise
+        })
+    }
+
+    func getAuthorAsUser() -> Future<PFUser> {
+        return self.then(with: { (channel) in
+            let promise = Promise<PFUser>()
+            if let authorID = channel.createdBy,
+                let query = PFUser.query() {
+                query.whereKey("objectId", equalTo: authorID)
+                query.getFirstObjectInBackground(block: { (object, error) in
+                    if let error = error {
+                        promise.reject(with: error)
+                    } else if let user = object as? PFUser {
+                        promise.resolve(with: user)
+                    } else {
+                        promise.reject(with: ClientError.generic)
+                    }
+                })
+            } else {
+                promise.reject(with: ClientError.generic)
             }
 
             return promise

@@ -9,31 +9,34 @@
 import Foundation
 import ReactiveSwift
 
-class ChannelViewController: FullScreenViewController {
+class ChannelViewController: ViewController, ScrolledModalControllerPresentable, KeyboardObservable {
+
+    var topMargin: CGFloat {
+        guard let topInset = UIWindow.topWindow()?.safeAreaInsets.top else { return 0 }
+        return topInset + 60
+    }
+
+    var scrollView: UIScrollView? {
+        return self.channelCollectionVC.collectionView
+    }
+
+    var scrollingEnabled: Bool = true
+    var didUpdateHeight: ((CGFloat, TimeInterval) -> ())?
 
     let channelType: ChannelType
 
     lazy var channelCollectionVC = ChannelCollectionViewController()
 
-    lazy var inputTextView: InputTextView = {
-        let textView = InputTextView()
-        textView.delegate = self
-        return textView
-    }()
-
-    private(set) var contextButton = ContextButton()
+    private let messageInputView = MessageInputView()
     private(set) var bottomGradientView = GradientView()
-    let detailBar = ChannelDetailBar()
 
-    var oldTextViewHeight: CGFloat = 48
-    let bottomOffset: CGFloat = 16
-
-    let showAnimator = UIViewPropertyAnimator(duration: 0.1,
-                                              curve: .linear,
-                                              animations: nil)
-    let dismissAnimator = UIViewPropertyAnimator(duration: 0.1,
-                                                 curve: .easeIn,
-                                                 animations: nil)
+    private var bottomOffset: CGFloat {
+        var offset: CGFloat = 16
+        if let handler = self.keyboardHandler, handler.currentKeyboardHeight == 0 {
+            offset += self.view.safeAreaInsets.bottom
+        }
+        return offset
+    }
 
     init(channelType: ChannelType) {
         self.channelType = channelType
@@ -48,42 +51,26 @@ class ChannelViewController: FullScreenViewController {
         fatalError("init(withObject:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func initializeViews() {
+        super.initializeViews()
 
-        self.view.set(backgroundColor: .background1)
+        self.registerKeyboardEvents()
+        self.view.set(backgroundColor: .background3)
 
-        self.addChild(viewController: self.channelCollectionVC, toView: self.contentContainer)
-        self.contentContainer.addSubview(self.bottomGradientView)
+        self.addChild(viewController: self.channelCollectionVC)
+        self.view.addSubview(self.bottomGradientView)
 
-        self.contentContainer.addSubview(self.inputTextView)
-        self.inputTextView.growingDelegate = self
+        self.view.addSubview(self.messageInputView)
+        self.messageInputView.textView.growingDelegate = self
 
-        self.contentContainer.addSubview(self.contextButton)
-        self.contextButton.onTap { [unowned self] (tap) in
-            guard let text = self.inputTextView.text, !text.isEmpty else { return }
-           // self.sendSystem(message: text)
+        self.messageInputView.contextButton.onTap { [unowned self] (tap) in
+            guard let text = self.messageInputView.textView.text, !text.isEmpty else { return }
             self.send(message: text)
         }
 
-        self.contentContainer.addSubview(self.detailBar)
-        self.detailBar.closeButton.onTap { [unowned self] (tap) in
-            self.dismiss(animated: true, completion: nil)
-        }
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow(notification:)),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide(notification:)),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-
         self.channelCollectionVC.collectionView.onDoubleTap { [unowned self] (doubleTap) in
-            if self.inputTextView.isFirstResponder {
-                self.inputTextView.resignFirstResponder()
+            if self.messageInputView.textView.isFirstResponder {
+                self.messageInputView.textView.resignFirstResponder()
             }
         }
 
@@ -93,39 +80,24 @@ class ChannelViewController: FullScreenViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        self.contentContainer.height = self.view.height
-        self.contentContainer.top = 0
+        guard let handler = self.keyboardHandler else { return }
 
-        self.detailBar.size = CGSize(width: self.contentContainer.width, height: 60)
-        self.detailBar.top = self.view.safeAreaInsets.top
-        self.detailBar.centerOnX()
+        self.channelCollectionVC.view.size = CGSize(width: self.view.width,
+                                                    height: self.view.height - handler.currentKeyboardHeight)
+        self.channelCollectionVC.view.top = 0
+        self.channelCollectionVC.view.centerOnX()
 
-        self.channelCollectionVC.view.frame = self.contentContainer.bounds
+        self.messageInputView.size = CGSize(width: self.view.width - 32, height: self.messageInputView.textView.currentHeight)
+        self.messageInputView.centerOnX()
+        self.messageInputView.bottom = self.channelCollectionVC.view.bottom - self.bottomOffset
 
-        self.contextButton.size = CGSize(width: 48, height: 48)
-        self.contextButton.left = 16
-        self.contextButton.bottom = self.contentContainer.height - self.view.safeAreaInsets.bottom
-
-        let textViewWidth = self.contentContainer.width - self.contextButton.right - 12 - 16
-        self.inputTextView.size = CGSize(width: textViewWidth, height: self.inputTextView.currentHeight)
-        self.inputTextView.left = self.contextButton.right + 12
-        self.inputTextView.bottom = self.contextButton.bottom
-
-        let gradientHeight = self.contentContainer.height - self.contextButton.top 
-        self.bottomGradientView.size = CGSize(width: self.contentContainer.width, height: gradientHeight)
-        self.bottomGradientView.bottom = self.contentContainer.height
+        let gradientHeight = self.channelCollectionVC.view.height - self.messageInputView.top
+        self.bottomGradientView.size = CGSize(width: self.view.width, height: gradientHeight)
+        self.bottomGradientView.bottom = self.channelCollectionVC.view.bottom
         self.bottomGradientView.centerOnX()
     }
 
     func loadMessages(for type: ChannelType) {
-        switch type {
-        case .system(let message):
-            self.detailBar.set(avatar: message.avatar)
-        case .channel(let channel):
-            if let name = channel.friendlyName {
-                self.detailBar.set(text: name)
-            }
-        }
         self.channelCollectionVC.loadMessages(for: type)
     }
 
@@ -149,16 +121,27 @@ class ChannelViewController: FullScreenViewController {
 
     private func reset() {
         self.channelCollectionVC.collectionView.scrollToBottom()
-        self.inputTextView.text = String()
+        self.messageInputView.textView.text = String()
+    }
+
+    func handleKeyboard(height: CGFloat, with animationDuration: TimeInterval) {
+
+        UIView.animate(withDuration: animationDuration, animations: {
+            self.channelCollectionVC.collectionView.height = self.view.height - height
+            self.channelCollectionVC.collectionView.collectionViewLayout.invalidateLayout()
+        }) { (completed) in
+            if completed {
+                self.channelCollectionVC.collectionView.scrollToBottom()
+            }
+        }
     }
 }
 
 extension ChannelViewController: GrowingTextViewDelegate {
     func textViewDidChangeHeight(_ textView: GrowingTextView, height: CGFloat) {
         UIView.animate(withDuration: Theme.animationDuration) {
-            self.inputTextView.height = height
-            self.inputTextView.bottom = self.contextButton.bottom
-            self.oldTextViewHeight = height
+            self.messageInputView.textView.height = height
+            self.view.layoutNow()
         }
     }
 }

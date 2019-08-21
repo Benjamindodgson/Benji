@@ -8,14 +8,10 @@
 
 import Foundation
 
-class ContactsScrolledModalController: ScrolledModalViewController {
-
-    let contactsVC: ContactsViewController
+class ContactsScrolledModalController: ScrolledTitleModalViewController<ContactsViewController> {
 
     init() {
-        let vc = ContactsViewController()
-        self.contactsVC = vc
-        super.init(presentable: vc)
+        super.init(presentable: ContactsViewController())
         self.titleText = LocalizedString(id: "", default: "Contacts")
     }
 

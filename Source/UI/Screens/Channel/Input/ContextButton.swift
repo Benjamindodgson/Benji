@@ -24,10 +24,7 @@ class ContextButton: View {
         self.addSubview(self.contextCircleRight)
         self.addSubview(self.contextCircleCenter)
 
-        self.layer.borderWidth = Theme.borderWidth
-        self.layer.borderColor = Color.lightPurple.color.cgColor
-
-        self.set(backgroundColor: .backgroundWithAlpha)
+        self.set(backgroundColor: .clear)
     }
 
     override func layoutSubviews() {
@@ -54,8 +51,6 @@ class ContextButton: View {
         self.contextCircleLeft.size = circleSize
         self.contextCircleLeft.right = self.contextCircleCenter.left - circleOffset
         self.contextCircleLeft.centerOnY()
-
-        self.makeRound()
     }
 }
 

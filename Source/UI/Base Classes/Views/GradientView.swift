@@ -16,12 +16,12 @@ class GradientView: PassThroughView {
     override func initialize() {
         self.set(backgroundColor: .clear)
 
-        self.gradient.colors = [Color.background1.color.cgColor,
-                                Color.background1.color.cgColor,
-                                Color.background1.color.withAlphaComponent(0.9).cgColor,
-                                Color.background1.color.withAlphaComponent(0.8).cgColor,
-                                Color.background1.color.withAlphaComponent(0.6).cgColor,
-                                Color.background1.color.withAlphaComponent(0).cgColor].reversed()
+        self.gradient.colors = [Color.background3.color.cgColor,
+                                Color.background3.color.cgColor,
+                                Color.background3.color.withAlphaComponent(0.9).cgColor,
+                                Color.background3.color.withAlphaComponent(0.8).cgColor,
+                                Color.background3.color.withAlphaComponent(0.6).cgColor,
+                                Color.background3.color.withAlphaComponent(0).cgColor].reversed()
         self.gradient.type = .axial
         self.layer.addSublayer(self.gradient)
     }

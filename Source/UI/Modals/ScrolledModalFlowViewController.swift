@@ -8,7 +8,9 @@
 
 import Foundation
 
-class ScrolledModalFlowViewController: ViewController, ScrolledModalControllerPresentable {
+class ScrolledModalFlowViewController: ViewController, ScrolledModalControllerPresentable, KeyboardObservable {
+
+    var didUpdateHeight: ((CGFloat, TimeInterval) -> ())?
 
     var maxHeight: CGFloat = 100
     var topMargin: CGFloat = 54
@@ -18,6 +20,8 @@ class ScrolledModalFlowViewController: ViewController, ScrolledModalControllerPr
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.registerKeyboardEvents()
 
         if let sv = self.scrollView {
             self.view.addSubview(sv)
@@ -69,5 +73,9 @@ class ScrolledModalFlowViewController: ViewController, ScrolledModalControllerPr
         }
 
         return false
+    }
+
+    func handleKeyboard(height: CGFloat, with animationDuration: TimeInterval) {
+        self.didUpdateHeight?(height, animationDuration)
     }
 }

@@ -11,8 +11,8 @@ import Parse
 
 extension PFUser: Avatar {
 
-    var photoUrl: URL? {
-        return nil
+    var user: PFUser? {
+        return self
     }
 
     var photo: UIImage? {
@@ -53,6 +53,10 @@ extension PFUser: Avatar {
 
             self.setObject(newValue, forKey: "handle")
         }
+    }
+
+    var userObjectID: String? {
+        return self.objectId
     }
 }
 

@@ -12,7 +12,7 @@ class NavigationBarView: View {
 
     static let margin: CGFloat = 14
 
-    private(set) var titleLabel = Display1Label()
+    private(set) var titleLabel = Display2Label()
 
     let leftContainer = UIView()
     private(set) var leftItem: UIView?
@@ -45,13 +45,13 @@ class NavigationBarView: View {
         super.layoutSubviews()
 
         self.leftContainer.left = NavigationBarView.margin
-        self.leftContainer.size = CGSize(width: 50, height: self.height)
+        self.leftContainer.size = CGSize(width: 30, height: 30)
         self.leftContainer.centerOnY()
 
         self.leftItem?.frame = self.leftContainer.bounds
         self.leftItem?.contentMode = .center
 
-        self.rightContainer.size = CGSize(width: 50, height: self.height)
+        self.rightContainer.size = CGSize(width: 30, height: 30)
         self.rightContainer.right = self.width - NavigationBarView.margin
         self.rightContainer.centerOnY()
 

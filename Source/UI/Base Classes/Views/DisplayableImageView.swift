@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 protocol DisplayableDelegate {
     func didSet(displayable: ImageDisplayable)
@@ -37,6 +38,8 @@ class DisplayableImageView: View {
     }
 
     override func initialize() {
+        super.initialize()
+
         self.set(backgroundColor: .clear)
         self.addSubview(self.imageView)
         self.imageView.contentMode = .scaleAspectFill
@@ -55,17 +58,33 @@ class DisplayableImageView: View {
     private func updateImageView() {
         if let photo = self.displayable.photo {
             self.imageView.image = photo
-        } else if let photoUrl = self.displayable.photoUrl {
-            self.downloadAndSetImage(url: photoUrl)
+        } else if let user = self.displayable.user {
+            self.downloadAndSetImage(for: user)
+        } else if let objectID = self.displayable.userObjectID {
+            self.findUser(with: objectID)
         }
     }
 
-    private func downloadAndSetImage(url: URL) {
+    private func downloadAndSetImage(for user: PFUser) {
         //Possible Parse integration
-//        self.imageView.sd_setImage(with: url,
-//                                   completed: { [weak self] (image, error, imageCacheType, imageUrl) in
-//                                    guard let `self` = self, image != nil else { return }
-//                                    self.imageView.image = image
-//        })
+        guard let imageFile = user["profilePicture"] as? PFFileObject else { return }
+        
+        imageFile.getDataInBackground { (imageData: Data?, error: Error?) in
+            guard let data = imageData else { return }
+            let image = UIImage(data: data)
+            self.imageView.image = image
+        }
+    }
+
+    private func findUser(with objectID: String) {
+        let query = PFUser.query()
+        query?.whereKey("objectId", equalTo: objectID)
+        query?.getFirstObjectInBackground(block: { (object, error) in
+            if let user = object as? PFUser {
+                self.downloadAndSetImage(for: user)
+            } else {
+                print(ClientError.message(detail: "FAILED TO FIND USER"))
+            }
+        })
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 struct SystemAvatar: Avatar {
 
@@ -25,6 +26,15 @@ struct SystemAvatar: Avatar {
     var lastName: String {
         return "Dodgson"
     }
-    var photoUrl: URL?
+
+    var user: PFUser? {
+        return nil
+    }
+
+    var userObjectID: String? {
+        return nil 
+    }
+    
     var photo: UIImage?
+
 }

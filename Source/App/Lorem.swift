@@ -65,7 +65,7 @@ class Lorem {
     private static let isFromCurrentUserList = [true, false]
 
     class func avatar() -> SystemAvatar {
-        return SystemAvatar(photoUrl: nil, photo: self.image())
+        return SystemAvatar(photo: self.image())
     }
 
     class func systemSections() -> [ChannelSectionType] {
@@ -106,7 +106,7 @@ class Lorem {
     }
 
     class func systemParagraph() -> SystemMessage {
-        let avatar = SystemAvatar(photoUrl: nil, photo: self.image())
+        let avatar = SystemAvatar(photo: self.image())
         let message = SystemMessage(avatar: avatar,
                                     context: self.context(),
                                     body: self.paragraph(),

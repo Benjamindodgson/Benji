@@ -9,11 +9,16 @@
 import Foundation
 
 protocol Presentable {
-    func toPresentable() -> UIViewController
+    typealias DismissableVC = UIViewController & Dismissable
+
+    var isFinished: Bool { get }
+    func toPresentable() -> DismissableVC
 }
 
-extension UIViewController: Presentable {
-    func toPresentable() -> UIViewController {
+extension ViewController: Presentable {
+
+    var isFinished: Bool { return true }
+    func toPresentable() -> DismissableVC {
         return self
     }
 }

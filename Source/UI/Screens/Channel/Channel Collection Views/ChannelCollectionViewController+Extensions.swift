@@ -17,7 +17,6 @@ extension ChannelCollectionViewController {
         case .system( _ ):
             self.loadTestMessages()
         case .channel(let channel):
-            ChannelManager.shared.selectedChannel = channel
             self.loadChannelMessages(with: channel)
         }
     }
@@ -27,7 +26,10 @@ extension ChannelCollectionViewController {
         ChannelManager.shared.selectedChannel = channel
         ChannelManager.shared.getAllMessages(for: channel) { [unowned self] (sections) in
             self.channelDataSource.set(newSections: sections)
-            //self.collectionView.animateEmptyView(shouldShow: sections.count == 0)
+            delay(0.5, { [weak self] in
+                guard let `self` = self else { return }
+                self.collectionView.scrollToBottom()
+            })
         }
     }
 
@@ -105,28 +107,18 @@ extension ChannelCollectionViewController {
             }
             }.start()
 
-        ChannelManager.shared.channelsUpdate.producer.on { [weak self] (update) in
+        ChannelManager.shared.channelSyncUpdate.producer.on { [weak self] (update) in
             guard let `self` = self else { return }
 
             guard let channelsUpdate = update, channelsUpdate.channel == ChannelManager.shared.selectedChannel
                 else { return }
 
             switch channelsUpdate.status {
-            case .added:
+            case .none, .identifier, .metadata, .failed:
                 break
-            case .changed:
-                break
-            case .deleted:
-                self.channelDataSource.reset()
-            case .syncUpdate(let syncStatus):
-                switch syncStatus {
-                case .none, .identifier, .metadata, .failed:
-                    break
-                case .all:
-                    self.loadChannelMessages(with: channelsUpdate.channel)
-                @unknown default:
-                    break
-                }
+            case .all:
+                self.loadChannelMessages(with: channelsUpdate.channel)
+            @unknown default:
                 break
             }
             }.start()

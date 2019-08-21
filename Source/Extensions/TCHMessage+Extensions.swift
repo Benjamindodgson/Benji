@@ -45,11 +45,41 @@ extension TCHMessage: Diffable, DisplayableCellItem, Avatar {
         return String()
     }
 
-    var photoUrl: URL? {
+    var user: PFUser? {
         return nil
     }
 
     var photo: UIImage? {
         return nil
+    }
+
+    var userObjectID: String? {
+        return self.author
+    }
+}
+
+extension Future where Value == TCHMessage {
+
+    func getAuthorAsUser() -> Future<PFUser> {
+        return self.then(with: { (message) in
+            let promise = Promise<PFUser>()
+            if let authorID = message.author,
+                let query = PFUser.query() {
+                query.whereKey("objectId", equalTo: authorID)
+                query.getFirstObjectInBackground(block: { (object, error) in
+                    if let error = error {
+                        promise.reject(with: error)
+                    } else if let user = object as? PFUser {
+                        promise.resolve(with: user)
+                    } else {
+                        promise.reject(with: ClientError.generic)
+                    }
+                })
+            } else {
+                promise.reject(with: ClientError.generic)
+            }
+
+            return promise
+        })
     }
 }

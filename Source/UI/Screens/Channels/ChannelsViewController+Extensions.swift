@@ -11,7 +11,7 @@ import Foundation
 extension ChannelsViewController {
 
     func subscribeToUpdates() {
-        ChannelManager.shared.channelsUpdate.producer.on { [weak self] (update) in
+        ChannelManager.shared.channelUpdate.producer.on { [weak self] (update) in
             guard let `self` = self else { return }
 
             guard let channelsUpdate = update else { return }
@@ -23,18 +23,23 @@ extension ChannelsViewController {
                 self.manager.update(item: .channel(channelsUpdate.channel))
             case .deleted:
                 self.manager.delete(item: .channel(channelsUpdate.channel))
-            case .syncUpdate(let syncStatus):
-                switch syncStatus {
-                case .none, .identifier, .metadata, .failed:
-                    break
-                case .all:
-                    self.loadChannels()
-                @unknown default:
-                    break
-                }
-                break
             }
         }.start()
+
+        ChannelManager.shared.channelSyncUpdate.producer.on { [weak self] (update) in
+            guard let `self` = self else { return }
+
+            guard let channelsUpdate = update else { return }
+
+            switch channelsUpdate.status {
+            case .none, .identifier, .metadata, .failed:
+                break
+            case .all:
+                self.loadChannels()
+            @unknown default:
+                break
+            }
+            }.start()
     }
 
     private func loadChannels() {

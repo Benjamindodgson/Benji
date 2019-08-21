@@ -35,8 +35,12 @@ struct ChannelUpdate {
         case added
         case changed
         case deleted
-        case syncUpdate(TCHChannelSynchronizationStatus)
     }
+}
+
+struct ChannelSyncUpdate {
+    var channel: TCHChannel
+    var status: TCHChannelSynchronizationStatus
 }
 
 struct MessageUpdate {
@@ -115,24 +119,24 @@ extension ChannelManager: TwilioChatClientDelegate {
         if channel.status == TCHChannelStatus.invited {
             channel.join() { result in
                 if result.isSuccessful() {
-                    self.channelsUpdate.value = ChannelUpdate(channel: channel, status: .added)
+                    self.channelUpdate.value = ChannelUpdate(channel: channel, status: .added)
                 }
             }
         } else {
-            self.channelsUpdate.value = ChannelUpdate(channel: channel, status: .added)
+            self.channelUpdate.value = ChannelUpdate(channel: channel, status: .added)
         }
     }
 
     func chatClient(_ client: TwilioChatClient!, channelChanged channel: TCHChannel!) {
-        self.channelsUpdate.value = ChannelUpdate(channel: channel, status: .changed)
+        self.channelUpdate.value = ChannelUpdate(channel: channel, status: .changed)
     }
 
     func chatClient(_ client: TwilioChatClient, channelDeleted channel: TCHChannel) {
-        self.channelsUpdate.value = ChannelUpdate(channel: channel, status: .deleted)
+        self.channelUpdate.value = ChannelUpdate(channel: channel, status: .deleted)
     }
 
     func chatClient(_ client: TwilioChatClient, channel: TCHChannel, synchronizationStatusUpdated status: TCHChannelSynchronizationStatus) {
-        self.channelsUpdate.value = ChannelUpdate(channel: channel, status: .syncUpdate(status))
+        self.channelSyncUpdate.value = ChannelSyncUpdate(channel: channel, status: status)
     }
 
     //MARK: MEMBER UDPATES

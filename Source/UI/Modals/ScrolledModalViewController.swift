@@ -8,39 +8,17 @@
 
 import Foundation
 
-protocol ScrolledModalControllerPresentable where Self : UIViewController {
-    var topMargin: CGFloat { get }
-    var scrollView: UIScrollView? { get }
-    var scrollingEnabled: Bool { get }
-    var didDismiss: (() -> Void)? { get set }
-}
-
-class ScrolledModalViewController: ViewController, ScrolledModalContainerViewDelegate {
+class ScrolledModalViewController<Presentable: ScrolledModalControllerPresentable>: ViewController, ScrolledModalContainerViewDelegate {
 
     var contentExpandedHeight: CGFloat {
         return self.view.height - self.presentable.topMargin
     }
 
-    private let tapDismissView = UIView()
+    private(set) var tapDismissView = UIView()
+    private(set) var modalContainerView: ScrolledModalContainerView
+    private(set) var presentable: Presentable
 
-    private let modalContainerView: ScrolledModalContainerView
-    private var presentable: ScrolledModalControllerPresentable
-
-    private let titleLabel = Label()
-    private let titleContainer = View()
-
-    var titleText: Localized? {
-        didSet {
-            guard let text = self.titleText else { return }
-            let attributed = AttributedString(text,
-                                              fontType: .display2,
-                                              color: .white)
-            self.titleLabel.set(attributed: attributed,
-                                alignment: .left)
-        }
-    }
-
-    init(presentable: ScrolledModalControllerPresentable) {
+    init(presentable: Presentable) {
         self.presentable = presentable
         self.modalContainerView = ScrolledModalContainerView(presentable: presentable)
 
@@ -56,8 +34,8 @@ class ScrolledModalViewController: ViewController, ScrolledModalContainerViewDel
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func initializeViews() {
+        super.initializeViews()
 
         self.view.set(backgroundColor: .clear)
         self.modalContainerView.delegate = self
@@ -73,22 +51,23 @@ class ScrolledModalViewController: ViewController, ScrolledModalContainerViewDel
         }
 
         self.view.addSubview(self.modalContainerView)
-        self.view.addSubview(self.titleContainer)
-        self.titleContainer.addSubview(self.titleLabel)
-        self.titleContainer.set(backgroundColor: .background3)
 
         self.addChild(viewController: self.presentable, toView: self.modalContainerView)
         self.presentable.didDismiss = { [unowned self] in
             self.dismiss(animated: true)
+        }
+
+        self.presentable.didUpdateHeight = { [unowned self] (height, duration) in
+            let expandedHeight = self.getExpandedHeight() + height
+            self.animate(height: expandedHeight, with: duration)
         }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        UIView.animate(withDuration: Theme.animationDuration) {
-            let expandedHeight = self.view.height - self.presentable.topMargin
-            self.modalContainerView.setExpandedHeight(expandedHeight: expandedHeight)
+        once(caller: self, token: "setScrolledModalExpanded") {
+            self.animate(height: self.getExpandedHeight(), with: Theme.animationDuration)
         }
     }
 
@@ -97,27 +76,11 @@ class ScrolledModalViewController: ViewController, ScrolledModalContainerViewDel
 
         self.tapDismissView.frame = self.view.bounds
 
-        self.modalContainerView.size = CGSize(width: self.view.width * 0.95,
+        self.modalContainerView.size = CGSize(width: self.view.width,
                                               height: self.modalContainerView.currentHeight)
+        self.modalContainerView.round(corners: [.topLeft, .topRight], size: CGSize(width: 10, height: 10))
         self.modalContainerView.centerOnX()
         self.modalContainerView.bottom = self.view.height
-
-        self.titleContainer.width = self.modalContainerView.width
-
-        if let attributedText = self.titleLabel.attributedText {
-            let titleWidth = self.titleContainer.width - 24 * 2
-            self.titleLabel.size = attributedText.getSize(withWidth: titleWidth)
-            self.titleContainer.height = self.titleLabel.height + 32 + Theme.contentOffset
-        } else {
-            self.titleContainer.height = 0
-        }
-
-        self.titleLabel.top = 32
-        self.titleLabel.left = 24
-
-        self.titleContainer.bottom = self.modalContainerView.top
-        self.titleContainer.centerOnX()
-        self.titleContainer.round(corners: UIRectCorner(arrayLiteral: [.topLeft, .topRight]), size: CGSize(width: Theme.cornerRadius, height: Theme.cornerRadius))
 
         self.presentable.view.frame = self.modalContainerView.bounds
     }
@@ -148,7 +111,17 @@ class ScrolledModalViewController: ViewController, ScrolledModalContainerViewDel
         self.dismiss(animated: true, completion: nil)
     }
 
+    private func animate(height: CGFloat, with duration: TimeInterval) {
+        UIView.animate(withDuration: duration) {
+            self.modalContainerView.setExpandedHeight(expandedHeight: height)
+        }
+    }
+
     private func updateAlpha(with progress: Float) {
         self.tapDismissView.alpha = CGFloat(progress)
+    }
+
+    private func getExpandedHeight() -> CGFloat {
+        return self.view.height - self.presentable.topMargin
     }
 }

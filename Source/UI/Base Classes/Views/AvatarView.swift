@@ -167,11 +167,9 @@ class AvatarView: DisplayableImageView {
     // MARK: - Open setters
 
     func set(avatar: Avatar) {
-        if let image = avatar.photo {
-            self.imageView.image = image
-        } else {
-            self.initials = avatar.initials
-        }
+        self.displayable = avatar
+        guard avatar.photo == nil, avatar.user == nil else { return }
+        self.initials = avatar.initials
     }
 
     func setCorner(radius: CGFloat?) {

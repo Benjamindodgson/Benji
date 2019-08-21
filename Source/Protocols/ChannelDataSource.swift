@@ -51,12 +51,6 @@ extension ChannelDataSource {
     func set(newSections: [ChannelSectionType]) {
         self.sections.value = newSections
         self.collectionView?.reloadData()
-
-        //FIX ME!!!!
-//        self.updateCollectionView(sections: newSections, modify: { [weak self] in
-//            guard let `self` = self else { return }
-//            self.sections.value = newSections
-//        })
     }
 
     func append(item: MessageType) {

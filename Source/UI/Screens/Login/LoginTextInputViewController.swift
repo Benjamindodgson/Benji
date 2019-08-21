@@ -35,17 +35,16 @@ class LoginTextInputViewController: ViewController {
     override func initializeViews() {
         super.initializeViews()
 
-        self.view.set(backgroundColor: .blue)
+        self.view.set(backgroundColor: .background3)
         let attributed = AttributedString(self.textFieldTitle,
-                                          fontType: .medium,
-                                          color: .black)
+                                          fontType: .xxSmallSemiBold,
+                                          color: .white)
         self.textFieldLabel.set(attributed: attributed,
                                 lineCount: 1,
                                 stringCasing: .uppercase)
         self.view.addSubview(self.textFieldLabel)
 
         self.initializeTextField()
-        self.createPickerToolbar()
     }
 
     func initializeTextField() {
@@ -53,9 +52,9 @@ class LoginTextInputViewController: ViewController {
         self.textField.returnKeyType = .done
         self.textField.adjustsFontSizeToFitWidth = true
         if let placeholder = self.textFieldPlaceholder {
-            let attributed = AttributedString(placeholder, fontType: .medium, color: .black)
+            let attributed = AttributedString(placeholder, fontType: .medium, color: .white)
             self.textField.setPlaceholder(attributed: attributed)
-            self.textField.setDefaultAttributes(style: StringStyle(font: .medium, color: .blue))
+            self.textField.setDefaultAttributes(style: StringStyle(font: .medium, color: .white))
         }
 
         self.textField.addTarget(self,
@@ -66,31 +65,16 @@ class LoginTextInputViewController: ViewController {
         self.view.addSubview(self.textField)
     }
 
-    private func createPickerToolbar() {
-        self.toolbar.barStyle = UIBarStyle.default
-        self.toolbar.isTranslucent = true
-        self.toolbar.barTintColor = Color.purple.color
-        self.toolbar.clipsToBounds = true
-        self.toolbar.sizeToFit()
-
-        // Necessary to place doneButton on right side of toolbar
-        let flexibleItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace)
-        let doneItem = DoneBarButtonItem { [weak self] in
-            guard let `self` = self else { return }
-            self.textField.resignFirstResponder()
-        }
-        self.toolbar.setItems([flexibleItem, doneItem], animated: false)
-        self.textField.inputAccessoryView = self.toolbar
-    }
-
     @objc func textFieldDidChange() {}
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
+        self.view.round(corners: [.topLeft, .topRight], size: CGSize(width: 10, height: 10))
+
         self.textFieldLabel.size = CGSize(width: 200, height: 20)
         self.textFieldLabel.left = 14
-        self.textFieldLabel.top = 20
+        self.textFieldLabel.top = 80
 
         self.textField.height = 50
         self.textField.width = self.view.width - 28

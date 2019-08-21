@@ -60,6 +60,7 @@ class LoginPhoneViewController: LoginTextInputViewController {
     }
 
     private func sendCode(to phone: PhoneNumber) {
+        self.didComplete(phone)
 //        SendCode(phone: phone)
 //            .producer
 //            .withErrorBanner()

@@ -9,9 +9,16 @@
 import Foundation
 import TwilioChatClient
 
+protocol ChannelsViewControllerDelegate: class {
+    func channelsView(_ controller: ChannelsViewController, didSelect channelType: ChannelType)
+}
+
 class ChannelsViewController: CollectionViewController<ChannelCell, ChannelsCollectionViewManager> {
 
-    init() {
+    unowned let delegate: ChannelsViewControllerDelegate
+
+    init(with delegate: ChannelsViewControllerDelegate) {
+        self.delegate = delegate
         let collectionView = ChannelsCollectionView()
         super.init(with: collectionView)
         self.view.set(backgroundColor: .clear)
@@ -23,7 +30,7 @@ class ChannelsViewController: CollectionViewController<ChannelCell, ChannelsColl
     }
 
     override func didSelect(item: ChannelType, at indexPath: IndexPath) {
-        self.present(ChannelViewController(channelType: item), animated: true)
+        self.delegate.channelsView(self, didSelect: item)
     }
 
     func animateIn(completion: @escaping CompletionHandler) {

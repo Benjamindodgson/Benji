@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import Parse
 
 protocol ImageDisplayable {
-    var photoUrl: URL? { get }
+    var userObjectID: String? { get }
+    var user: PFUser? { get }
     var photo: UIImage? { get }
 }

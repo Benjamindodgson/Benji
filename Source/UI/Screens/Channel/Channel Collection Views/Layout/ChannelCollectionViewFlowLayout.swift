@@ -57,7 +57,7 @@ class ChannelCollectionViewFlowLayout: UICollectionViewFlowLayout {
         super.prepare()
 
         self.collectionView?.contentInset.bottom = 80
-        self.collectionView?.contentInset.top = 80
+        self.collectionView?.contentInset.top = 10
     }
 
     // MARK: - Attributes

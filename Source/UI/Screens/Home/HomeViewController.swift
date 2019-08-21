@@ -17,20 +17,37 @@ enum HomeContentType: Int {
 
 class HomeViewController: FullScreenViewController {
 
-    lazy var channelsVC = ChannelsViewController()
+    typealias HomeViewControllerDelegate = ChannelsViewControllerDelegate
+
+    lazy var channelsVC = ChannelsViewController(with: self.delegate)
     lazy var feedVC = FeedViewController()
     lazy var segmentControl = HomeSegmentControl(items: ["FEED", "LIST"])
     lazy var avatarView: AvatarView = {
         let avatarView = AvatarView()
-        avatarView.set(avatar: Lorem.avatar())
+        if let current = PFUser.current() {
+            avatarView.set(avatar: current)
+        }
         return avatarView
     }()
 
-    let headerContainer = View()
-    let searchImageView = UIImageView(image: #imageLiteral(resourceName: "Search"))
-    let addButton = HomeAddButton()
-
+    private let headerContainer = View()
+    private let searchImageView = UIImageView(image: #imageLiteral(resourceName: "Search"))
+    private let addButton = HomeAddButton()
     private var currentType: HomeContentType = .feed
+    unowned let delegate: HomeViewControllerDelegate
+
+    init(with delegate: HomeViewControllerDelegate) {
+        self.delegate = delegate
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    required init?(withObject object: DeepLinkable) {
+        fatalError("init(withObject:) has not been implemented")
+    }
 
     override func initializeViews() {
 
@@ -92,7 +109,7 @@ class HomeViewController: FullScreenViewController {
 
     func presentContactPicker() {
         let contactController = ContactsScrolledModalController()
-        contactController.contactsVC.delegate = self
+        contactController.presentable.delegate = self
         self.present(contactController, animated: true, completion: nil)
     }
 

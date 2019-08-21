@@ -16,7 +16,7 @@ protocol CoordinatorType: class {
     func removeChild()
 }
 
-class Coordinator<Result>: CoordinatorType, Presentable {
+class Coordinator<Result>: CoordinatorType {
 
     let router: Router
     var deepLink: DeepLinkable?
@@ -35,10 +35,6 @@ class Coordinator<Result>: CoordinatorType, Presentable {
     init(router: Router, deepLink: DeepLinkable?) {
         self.router = router
         self.deepLink = deepLink
-    }
-
-    func toPresentable() -> UIViewController {
-        fatalError("toPresentable not implemented in \(self)")
     }
 
     func start() { }
@@ -75,5 +71,22 @@ class Coordinator<Result>: CoordinatorType, Presentable {
     func finishFlow(with result: Result) {
         self.removeFromParent()
         self.onFinishedFlow?(result)
+    }
+}
+
+class PresentableCoordinator<Result>: Coordinator<Result>, Presentable {
+
+    var isFinished: Bool = false
+
+    func toPresentable() -> DismissableVC {
+        fatalError("toPresentable not implemented in \(self)")
+    }
+
+    override func finishFlow(with result: Result) {
+        // IMPORTANT: Set isFinished true before calling super in case a VC dismissal happens in the
+        // finished handler
+        self.isFinished = true
+
+        super.finishFlow(with: result)
     }
 }
