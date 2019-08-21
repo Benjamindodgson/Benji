@@ -10,9 +10,19 @@ import Foundation
 
 class Routine {
 
-    var messageCheckTime: Date
+    var timeComponents: DateComponents
+    var timeDescription: String {
+        let hour = self.timeComponents.hour ?? 0
+        let minute = self.timeComponents.minute ?? 0
+        return "\(hour):\(minute)"
+    }
 
     init(messageCheckTime: Date) {
-        self.messageCheckTime = messageCheckTime
+        self.timeComponents = Calendar.current.dateComponents([.hour, .minute],
+                                                              from: messageCheckTime)
+    }
+
+    init(timeComponents: DateComponents) {
+        self.timeComponents = timeComponents
     }
 }

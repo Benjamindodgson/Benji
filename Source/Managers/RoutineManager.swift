@@ -11,42 +11,55 @@ import UserNotifications
 
 class RoutineManager {
 
+    let messageReminderID = "MessageReminderID"
+
     static let shared = RoutineManager()
 
-    var currentRoutine: Routine? {
-        didSet {
-            guard let routine = self.currentRoutine else { return }
+//    var currentRoutine: Routine? {
+//        didSet {
+//            guard let routine = self.currentRoutine else { return }
+//
+//
+//            let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+//            notificationCenter.requestAuthorization(options: options) { (granted, error) in
+//                if granted {
+//                    self.scheduleNotification(for: routine)
+//                } else {
+//                    print("User has declined notifications")
+//                }
+//            }
+//        }
+//    }
 
-            let notificationCenter = UNUserNotificationCenter.current()
+    func getRoutineNotifications() -> Future<[UNNotificationRequest]> {
+        let requestsPromise = Promise<[UNNotificationRequest]>()
 
-            let options: UNAuthorizationOptions = [.alert, .sound, .badge]
-            notificationCenter.requestAuthorization(options: options) { (granted, error) in
-                if granted {
-                    self.scheduleNotification(for: routine)
-                } else {
-                    print("User has declined notifications")
-                }
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.getPendingNotificationRequests { (requests) in
+            let routineRequests = requests.filter { (request) -> Bool in
+                return request.identifier.contains(self.messageReminderID)
             }
+            requestsPromise.resolve(with: routineRequests)
         }
+
+        return requestsPromise
     }
 
     func scheduleNotification(for routine: Routine) {
 
+        let identifier = self.messageReminderID + routine.timeDescription
+
         let notificationCenter = UNUserNotificationCenter.current()
 
-        // Cancel any previous routines we may have set
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: ["Message Reminder"])
-
-        let identifier = "Message Reminder"
+        // Replace any previous notifications that had the same ID
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
 
         let content = UNMutableNotificationContent()
-        content.title = "Test title"
-        content.body = "Test body"
+        content.title = "New Messages"
+        content.body = "It's time to check your messages!"
         content.sound = UNNotificationSound.default
 
-        let timeComponents = Calendar.current.dateComponents([.hour, .minute],
-                                                            from: routine.messageCheckTime)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: timeComponents,
+        let trigger = UNCalendarNotificationTrigger(dateMatching: routine.timeComponents,
                                                     repeats: true)
 
         let request = UNNotificationRequest(identifier: identifier,
@@ -57,7 +70,7 @@ class RoutineManager {
             if let error = error {
                 print("Error \(error.localizedDescription)")
             } else {
-                print("Scheduled notification")
+                print("Scheduled notification for \(routine.timeDescription)")
             }
         }
     }

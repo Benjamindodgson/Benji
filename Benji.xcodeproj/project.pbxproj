@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8002F37F230CD07F00F8C4E3 /* Authorization+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8002F37E230CD07F00F8C4E3 /* Authorization+Extensions.swift */; };
 		80D4A21623039B22007CB5F1 /* RoutineInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D4A21523039B22007CB5F1 /* RoutineInputViewController.swift */; };
 		80D4A21823039B82007CB5F1 /* RoutineInputContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D4A21723039B82007CB5F1 /* RoutineInputContentView.swift */; };
 		80D4A21A23039FA5007CB5F1 /* RoutineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D4A21923039FA5007CB5F1 /* RoutineManager.swift */; };
@@ -205,6 +206,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8002F37E230CD07F00F8C4E3 /* Authorization+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Authorization+Extensions.swift"; sourceTree = "<group>"; };
 		80D4A21523039B22007CB5F1 /* RoutineInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineInputViewController.swift; sourceTree = "<group>"; };
 		80D4A21723039B82007CB5F1 /* RoutineInputContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineInputContentView.swift; sourceTree = "<group>"; };
 		80D4A21923039FA5007CB5F1 /* RoutineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineManager.swift; sourceTree = "<group>"; };
@@ -560,22 +562,23 @@
 		D61EC0D721D30C1400204BEE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8002F37E230CD07F00F8C4E3 /* Authorization+Extensions.swift */,
+				D6D1460621D552B100CD8CE4 /* Character+Extensions.swift */,
+				D66F0FE922C0695E00BA277D /* CNContact+Extensions.swift */,
 				D642736F22C991850088256B /* Collection Extensions */,
-				D642735C22C90C640088256B /* Math Extensions */,
-				D6D1503A21D7F47600CD8CE4 /* UI Extensions */,
-				D61EC0D821D30C8E00204BEE /* DispatchQue+Extensions.swift */,
 				D61EC0E721D3107A00204BEE /* Date+Extensions.swift */,
-				D61EC0E921D3111600204BEE /* String+Extensions.swift */,
+				D61EC0D821D30C8E00204BEE /* DispatchQue+Extensions.swift */,
+				D646DB3F22CFCFDB0055CC7C /* Future+Extensions.swift */,
+				D642735C22C90C640088256B /* Math Extensions */,
 				D61EC0F421D3151400204BEE /* NSAttributedString+Extensions.swift */,
 				D6D1460C21D5693100CD8CE4 /* NSMutableAttributedString+Extensions.swift */,
-				D6D1460621D552B100CD8CE4 /* Character+Extensions.swift */,
 				D6D1502A21D69C3300CD8CE4 /* NSObject+Extensions.swift */,
-				D6DADF682207D246007D9EB1 /* TCHMessage+Extensions.swift */,
-				D6DADF732207E0E2007D9EB1 /* TCHChannel+Extensions.swift */,
-				D66F0FE922C0695E00BA277D /* CNContact+Extensions.swift */,
-				D646DB3D22CFCF330055CC7C /* TwilioChatClient+Extensions.swift */,
-				D646DB3F22CFCFDB0055CC7C /* Future+Extensions.swift */,
 				D67896AE22FF62630059BA75 /* PhoneKit.swift */,
+				D61EC0E921D3111600204BEE /* String+Extensions.swift */,
+				D6DADF732207E0E2007D9EB1 /* TCHChannel+Extensions.swift */,
+				D6DADF682207D246007D9EB1 /* TCHMessage+Extensions.swift */,
+				D646DB3D22CFCF330055CC7C /* TwilioChatClient+Extensions.swift */,
+				D6D1503A21D7F47600CD8CE4 /* UI Extensions */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1242,6 +1245,7 @@
 				D642737122C991A60088256B /* ClosedRange+Extensions.swift in Sources */,
 				D6DADF722207DF83007D9EB1 /* ChannelsCollectionView.swift in Sources */,
 				D6D1502B21D69C3300CD8CE4 /* NSObject+Extensions.swift in Sources */,
+				8002F37F230CD07F00F8C4E3 /* Authorization+Extensions.swift in Sources */,
 				D6815DB122ECAEC700E71251 /* MediumLabel.swift in Sources */,
 				D6D1460321D551B100CD8CE4 /* StringLibrary.swift in Sources */,
 				D642739122C9BFA10088256B /* AlertViewController.swift in Sources */,

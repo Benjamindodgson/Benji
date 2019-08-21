@@ -12,22 +12,20 @@ class RoutineInputViewController: ViewController {
 
     let content = RoutineInputContentView()
 
+    var selectedDate: Date {
+        return self.content.timePicker.date
+    }
+
     override func loadView() {
         self.view = self.content
+
+        self.content.setRoutineButton.addTarget(self,
+                                                action: #selector(setRoutineTapped(_:)),
+                                                for: .touchUpInside)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.content.timePicker.addTarget(self,
-                                          action: #selector(self.onTimeChanged),
-                                          for: .valueChanged)
-    }
-
-    @objc func onTimeChanged(datePicker: UIDatePicker) {
-
-        let date = datePicker.date.addingTimeInterval(60)
-        let routine = Routine(messageCheckTime: date)
-        RoutineManager.shared.currentRoutine = routine
+    @objc func setRoutineTapped(_ sender: UIButton) {
+        let routine = Routine(messageCheckTime: self.selectedDate)
+        RoutineManager.shared.scheduleNotification(for: routine)
     }
 }
