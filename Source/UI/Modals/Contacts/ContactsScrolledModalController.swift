@@ -8,11 +8,10 @@
 
 import Foundation
 
-class ContactsScrolledModalController: ScrolledTitleModalViewController<ContactsViewController> {
+class ContactsScrolledModalController: ScrolledModalViewController<ContactsViewController> {
 
     init() {
         super.init(presentable: ContactsViewController())
-        self.titleText = LocalizedString(id: "", default: "Contacts")
     }
 
     required init?(coder aDecoder: NSCoder) {

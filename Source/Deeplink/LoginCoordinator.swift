@@ -13,9 +13,7 @@ class LoginCoordinator: PresentableCoordinator<Void> {
     var userExists: Bool
 
     lazy var loginFlowController: LoginFlowViewController = {
-        let controller = LoginFlowViewController(introVC: nil,
-                                                 endingVC: nil,
-                                                 userExists: self.userExists)
+        let controller = LoginFlowViewController(userExists: self.userExists)
         controller.delegate = self
         return controller
     }()

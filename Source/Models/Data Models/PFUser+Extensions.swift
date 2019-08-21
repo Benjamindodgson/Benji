@@ -58,6 +58,15 @@ extension PFUser: Avatar {
     var userObjectID: String? {
         return self.objectId
     }
+
+    func parseName(from text: String) {
+        if let first = text.components(separatedBy: " ").first {
+            self.firstName = first 
+        }
+        if let last = text.components(separatedBy: " ").last {
+            self.lastName = last
+        }
+    }
 }
 
 extension PFUser {

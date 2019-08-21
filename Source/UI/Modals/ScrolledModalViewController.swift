@@ -78,6 +78,7 @@ class ScrolledModalViewController<Presentable: ScrolledModalControllerPresentabl
 
         self.modalContainerView.size = CGSize(width: self.view.width,
                                               height: self.modalContainerView.currentHeight)
+
         self.modalContainerView.round(corners: [.topLeft, .topRight], size: CGSize(width: 10, height: 10))
         self.modalContainerView.centerOnX()
         self.modalContainerView.bottom = self.view.height

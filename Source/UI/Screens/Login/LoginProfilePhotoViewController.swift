@@ -68,7 +68,7 @@ class LoginProfilePhotoViewController: ViewController {
         guard let imageData = image.pngData(), let current = PFUser.current() else { return }
 
         let imageFile = PFFileObject(name:"image.png", data: imageData)
-        current["profilePicute"] = imageFile
+        current["profilePicture"] = imageFile
         self.doneButton.isLoading = true
         current.saveInBackground { (success, error) in
             guard success else { return }

@@ -10,13 +10,17 @@ import Foundation
 
 class RegularSemiBoldLabel: Label {
 
-    func set(text: Localized, color: Color = .white) {
+    func set(text: Localized,
+             color: Color = .white,
+             alignment: NSTextAlignment = .left,
+             stringCasing: StringCasing = .lowercase) {
+
         let attributed = AttributedString(text,
                                           fontType: .regularSemiBold,
                                           color: color)
 
         self.set(attributed: attributed,
-                 alignment: .left,
+                 alignment: alignment,
                  stringCasing: .lowercase)
     }
 }

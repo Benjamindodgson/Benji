@@ -20,9 +20,9 @@ class HomeCoordinator: PresentableCoordinator<Void> {
     override func start() {
         super.start()
 
-//        if PFAnonymousUtils.isLinked(with: PFUser.current()) {
-//            self.startLoginFlow()
-//        }
+        if PFAnonymousUtils.isLinked(with: PFUser.current()) {
+            self.startLoginFlow()
+        }
     }
 
     func startLoginFlow() {

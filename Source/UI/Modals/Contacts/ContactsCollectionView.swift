@@ -38,6 +38,7 @@ class ContactsCollectionEmptyView: View {
         super.layoutSubviews()
 
         self.button.size = CGSize(width: 200, height: Theme.buttonHeight)
+        self.button.roundCorners()
         self.button.centerOnXAndY()
     }
 }

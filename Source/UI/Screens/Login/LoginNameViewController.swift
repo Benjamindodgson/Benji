@@ -61,7 +61,7 @@ class LoginNameViewController: LoginTextInputViewController {
             let text = self.textField.text,
             !text.isEmpty else { return }
 
-        current.firstName = text
+        current.parseName(from: text)
         self.doneButton.isLoading = true
         current.saveInBackground { (success, error) in
             guard success else { return }
