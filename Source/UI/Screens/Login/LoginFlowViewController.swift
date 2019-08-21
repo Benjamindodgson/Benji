@@ -192,6 +192,9 @@ class LoginFlowViewController: ScrolledModalFlowViewController {
     private func fetchAllData() {
         guard let _ = PFUser.current() else { return }
 
+        let notificationCenter = UNUserNotificationCenter.current()
+        _ = notificationCenter.requestAuthorization()
+
         PFAnonymousUtils.logIn { (user, error) in
             if error != nil || user == nil {
                 print("Anonymous login failed.")
