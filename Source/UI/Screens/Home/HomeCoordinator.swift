@@ -11,7 +11,7 @@ import Parse
 
 class HomeCoordinator: PresentableCoordinator<Void> {
 
-    lazy var homeVC = HomeViewController(with: self)
+    private lazy var homeVC = HomeViewController(with: self)
 
     override func toPresentable() -> DismissableVC {
         return self.homeVC
@@ -27,7 +27,6 @@ class HomeCoordinator: PresentableCoordinator<Void> {
 extension HomeCoordinator: HomeViewControllerDelegate {
 
     func homeView(_ controller: HomeViewController, didSelect option: HomeOptionType) {
-
         switch option {
         case .profile:
             self.presentProfile()
@@ -47,10 +46,10 @@ extension HomeCoordinator: HomeViewControllerDelegate {
     }
 
     private func present(coordinator: PresentableCoordinator<Void>) {
-        self.addChildAndStart(coordinator, finishedHandler: { (_) in
+        self.addChildAndStart(coordinator, finishedHandler: { _ in
             self.router.dismiss(source: coordinator.toPresentable())
         })
-        self.router.present(coordinator, animated: true)
+        self.router.present(coordinator, source: self.homeVC, animated: true)
     }
 }
 
@@ -66,6 +65,6 @@ extension HomeCoordinator: ChannelsViewControllerDelegate {
         self.addChildAndStart(coordinator, finishedHandler: { (_) in
             self.router.dismiss(source: coordinator.toPresentable())
         })
-        self.router.present(coordinator, animated: true)
+        self.router.present(coordinator, source: self.homeVC, animated: true)
     }
 }

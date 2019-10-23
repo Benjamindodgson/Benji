@@ -62,7 +62,6 @@ class ProfileViewController: ViewController {
     }
 
     private func createItems() {
-
         var items: [ProfileDisplayable] = []
 
         let avatarItem = ProfileItem(avatar: self.user,

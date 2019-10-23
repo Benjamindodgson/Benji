@@ -62,12 +62,6 @@ class Router: NSObject, UINavigationControllerDelegate {
                        completion: completion)
     }
 
-    func present(_ module: Presentable, animated: Bool) {
-        self.navController.present(module.toPresentable(),
-                                   animated: animated,
-                                   completion: nil)
-    }
-
     func dismiss(source: UIViewController,
                  animated: Bool = true,
                  completion: (() -> Void)? = nil) {
