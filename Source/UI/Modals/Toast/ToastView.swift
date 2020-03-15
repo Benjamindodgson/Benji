@@ -9,6 +9,7 @@
 import Foundation
 import TMROLocalization
 import GestureRecognizerClosures
+import Lottie
 
 enum ToastPosition {
     case top, bottom
@@ -21,13 +22,14 @@ enum ToastState {
 class ToastView: UIView {
 
     @IBOutlet weak var titleLabel: SmallBoldLabel!
-    @IBOutlet weak var displayableImageView: DisplayableImageView!
+    @IBOutlet weak var displayableImageView: UIView!
     @IBOutlet weak var effectView: UIVisualEffectView!
 
     var didDismiss: () -> Void = {}
     var didTap: () -> Void = {}
 
     var toast: Toast?
+    let animationView = AnimationView(name: "alert-circle")
 
     let revealAnimator = UIViewPropertyAnimator(duration: 0.35,
                                                 dampingRatio: 0.6,
@@ -88,6 +90,9 @@ class ToastView: UIView {
         self.displayableImageView.layer.cornerRadius = 5
 
         self.titleLabel.alpha = 0
+        
+        self.animationView.loopMode = .loop
+        self.animationView.contentMode = .scaleAspectFit
 
         self.addShadow(withOffset: 5)
         self.updateFor(state: self.toastState)
@@ -110,7 +115,7 @@ class ToastView: UIView {
             self.dismiss()
         }
 
-        self.displayableImageView.displayable = toast.displayable
+        self.displayableImageView.addSubview(animationView)
     }
 
     func reveal() {
@@ -152,6 +157,7 @@ class ToastView: UIView {
             }, delayFactor: 0.1)
 
         self.expandAnimator.addCompletion({ [unowned self] (position) in
+            self.animationView.play()
             if position == .end {
                 self.addPan()
                 delay(self.presentationDuration) {
@@ -273,10 +279,12 @@ class ToastView: UIView {
         self.displayableImageView.size = CGSize(width: 40, height: 40)
         self.displayableImageView.left = 10
         self.displayableImageView.centerOnY()
+        
+        self.animationView.expandToSuperviewSize()
 
         let maxTitleWidth = self.width - (self.displayableImageView.right + 22)
         self.titleLabel.setSize(withWidth: maxTitleWidth)
-        self.titleLabel.left = self.displayableImageView.right + 10
+        self.titleLabel.left = self.displayableImageView.right + 20
         self.titleLabel.top = self.displayableImageView.top
         self.titleLabel.height = self.displayableImageView.height
         self.titleLabel.centerOnY()
