@@ -1,0 +1,15 @@
+${PODS_ROOT}/Target Support Files/Pods-Benji/Pods-Benji-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework
+${BUILT_PRODUCTS_DIR}/Branch/Branch.framework
+${BUILT_PRODUCTS_DIR}/GestureRecognizerClosures/GestureRecognizerClosures.framework
+${BUILT_PRODUCTS_DIR}/Koloda/Koloda.framework
+${BUILT_PRODUCTS_DIR}/Parse/Parse.framework
+${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework
+${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
+${BUILT_PRODUCTS_DIR}/TMROExtensionObject/TMROExtensionObject.framework
+${BUILT_PRODUCTS_DIR}/TMROFutures/TMROFutures.framework
+${BUILT_PRODUCTS_DIR}/TMROLocalization/TMROLocalization.framework
+${PODS_ROOT}/TwilioChatClient/TwilioChatClient.framework
+${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework
+${BUILT_PRODUCTS_DIR}/pop/pop.framework

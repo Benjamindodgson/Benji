@@ -1,0 +1,6 @@
+framework module TMROLocalization {
+  umbrella header "TMROLocalization-umbrella.h"
+
+  export *
+  module * { export * }
+}

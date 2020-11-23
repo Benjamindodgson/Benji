@@ -1,0 +1,6 @@
+framework module TMROExtensionObject {
+  umbrella header "TMROExtensionObject-umbrella.h"
+
+  export *
+  module * { export * }
+}
